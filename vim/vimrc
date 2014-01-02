@@ -8,7 +8,7 @@ set number
 set nobackup
 set ic             " do incremental search
 set is
-set hls
+set hls				" highlighted-search. Use nohls if don't want highlight
 set ai
 set ruler          " show status
 
