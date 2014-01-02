@@ -1,0 +1,40 @@
+set langmenu=en_US      " set english menu            
+:let $LANG='en'         " set english message
+set guifont=NanumGothicCoding:h12
+set encoding=utf-8      " set utf-8 default encoding
+colors torte
+syn on
+set number
+set nobackup
+set ic             " do incremental search
+set is
+set hls
+set ai
+set ruler          " show status
+
+set laststatus=2   " show statusline always
+
+set statusline=%<%F\ \ %h%m%r%y%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",Bomb\":\",NoBomb\").\"]\ \"}%k
+set statusline+=%=
+set statusline+=\ %-14.(Line:%l\/%L,Col:%c%V%)\ %P
+
+set cindent
+set sw=4
+set ts=4
+set bs=2           " allow backspacing over everything in insert mode
+set nowrap
+set showmatch     " show matched brace
+
+filetype plugin indent on
+
+" load default MS windows key-mapping
+source $VIMRUNTIME/mswin.vim
+
+
+" diff
+set diffopt+=iwhite
+nmap <A-Down> ]c
+nmap <A-Up> [c
+nmap <A-Left> :diffget<CR>
+nmap <A-Right> :diffput<CR>
+nmap <F5> :diffupdate<CR>
