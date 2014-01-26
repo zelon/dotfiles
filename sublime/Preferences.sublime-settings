@@ -3,5 +3,9 @@
 {
 	"ignored_packages": [""],
 	"vintage_ctrl_keys": true,
-	"vintage_start_in_command_mode": true	
+	"vintage_start_in_command_mode": true,
+	"font_face": "NanumGothicCoding",
+	"font_size": 9,
+	"line_padding_bottom":3
 }
+
