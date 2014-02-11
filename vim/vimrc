@@ -20,8 +20,9 @@ set statusline+=\ %-14.(Line:%l\/%L,Col:%c%V%)\ %P
 nnoremap B ^
 nnoremap E $
 set cindent
-set sw=4
-set ts=4
+set sw=2
+set ts=2
+set expandtab
 set bs=2           " allow backspacing over everything in insert mode
 set nowrap
 set showmatch     " show matched brace
@@ -31,7 +32,7 @@ filetype plugin indent on
 " load default MS windows key-mapping
 source $VIMRUNTIME/mswin.vim
 
-nmap L :set list!
+map <F4>  :set list!
 set listchars=tab:»\ ,eol:↲,trail:˘
 
 " diff
