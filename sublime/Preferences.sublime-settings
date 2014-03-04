@@ -6,6 +6,7 @@
 	"vintage_start_in_command_mode": true,
 	"font_face": "NanumGothicCoding",
 	"font_size": 9,
-	"line_padding_bottom":3
+	"line_padding_top":3,
+	"highlight_line":true
 }
 
