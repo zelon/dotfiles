@@ -26,6 +26,7 @@ set expandtab
 set bs=2           " allow backspacing over everything in insert mode
 set nowrap
 set showmatch     " show matched brace
+set directory=.,$TMP,$TEMP      " set temp directory
 
 filetype plugin indent on
 
