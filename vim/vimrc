@@ -33,6 +33,11 @@ filetype plugin indent on
 " load default MS windows key-mapping
 source $VIMRUNTIME/mswin.vim
 
+" tab short-cuts
+map <C-Tab> :tabNext<CR>
+nmap <silent> <C-t> :tabnew<CR>
+imap <silent> <C-t> <esc><C-t>
+
 map <F4>  :set list!
 set listchars=tab:»\ ,eol:↲,trail:˘
 
