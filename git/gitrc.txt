@@ -1,0 +1,4 @@
+git config --global alias.lg "log --name-status --color --abbrev-commit --date=relative --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
+git config --global alias.tree "log --graph --decorate --pretty=oneline --abbrev-commit --all"
+git config --global alias.unstage 'reset HEAD --'
+git config --global alias.st status
