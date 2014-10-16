@@ -9,7 +9,6 @@ set nobackup
 set ic             " do incremental search
 set is
 set hls				" highlighted-search. Use nohls if don't want highlight
-set ai
 set ruler          " show status
 set cursorline          " highlight current line
 set laststatus=2   " show statusline always
@@ -19,9 +18,12 @@ set statusline+=%=
 set statusline+=\ %-14.(Line:%l\/%L,Col:%c%V%)\ %P
 nnoremap B ^
 nnoremap E $
+
+set autoindent       " keep first spaces last line's
 set cindent
-set sw=2
-set ts=2
+set shiftwidth=2     " size of cindent that happen when block opening
+set tabstop=2
+
 set expandtab
 set bs=2           " allow backspacing over everything in insert mode
 set nowrap
