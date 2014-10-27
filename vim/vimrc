@@ -16,8 +16,6 @@ set wildmenu
 set statusline=%<%F\ \ %h%m%r%y%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",Bomb\":\",NoBomb\").\"]\ \"}%k
 set statusline+=%=
 set statusline+=\ %-14.(Line:%l\/%L,Col:%c%V%)\ %P
-nnoremap B ^
-nnoremap E $
 
 set autoindent       " keep first spaces last line's
 set cindent
@@ -31,6 +29,10 @@ set showmatch     " show matched brace
 set directory=.,$TMP,$TEMP      " set temp directory
 
 filetype plugin indent on
+
+" increase and decrease numeric
+noremap <F10> <C-A>
+noremap <F9> <C-X>
 
 " load default MS windows key-mapping
 source $VIMRUNTIME/mswin.vim
