@@ -30,6 +30,9 @@ set directory=.,$TMP,$TEMP      " set temp directory
 
 filetype plugin indent on
 
+autocmd GUIENTER * simalt ~x
+autocmd VimResized * wincmd =
+
 " increase and decrease numeric
 noremap <F10> <C-A>
 noremap <F9> <C-X>
