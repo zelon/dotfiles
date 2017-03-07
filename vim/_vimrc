@@ -55,3 +55,7 @@ nmap <A-Up> [c
 nmap <A-Left> :diffget<CR>
 nmap <A-Right> :diffput<CR>
 nmap <F5> :diffupdate<CR>
+
+" prevent from cancel visual mode when pressing ctrl+f
+set keymodel=startsel
+
