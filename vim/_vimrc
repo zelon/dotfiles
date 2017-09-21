@@ -1,6 +1,6 @@
 set langmenu=en_US      " set english menu            
 :let $LANG='en'         " set english message
-set guifont=NanumGothicCoding:h12
+set guifont=D2Coding:h11
 set encoding=utf-8      " set utf-8 default encoding
 colors torte
 syn on
@@ -10,7 +10,6 @@ set ic             " do incremental search
 set is
 set hls				" highlighted-search. Use nohls if don't want highlight
 set ruler          " show status
-set cursorline          " highlight current line
 set laststatus=2   " show statusline always
 set wildmenu
 set statusline=%<%F\ \ %h%m%r%y%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",Bomb\":\",NoBomb\").\"]\ \"}%k
