@@ -58,3 +58,5 @@ nmap <F5> :diffupdate<CR>
 " prevent from cancel visual mode when pressing ctrl+f
 set keymodel=startsel
 
+" unmapping Ctrl+F to use Ctrl+F as PageDown
+unmap <C-F>
