@@ -1,6 +1,7 @@
 [core]
   autocrlf = true
   editor = gvim
+  quotepath = false
 [alias]
   lg = log --name-status --color --abbrev-commit --date=relative --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
   tree = log --graph --decorate --pretty=oneline --abbrev-commit --all
