@@ -18,8 +18,8 @@ set statusline+=\ %-14.(Line:%l\/%L,Col:%c%V%)\ %P
 
 set autoindent       " keep first spaces last line's
 set cindent
-set shiftwidth=2     " size of cindent that happen when block opening
-set tabstop=2
+set shiftwidth=4     " size of cindent that happen when block opening
+set tabstop=4
 
 set expandtab
 set bs=2           " allow backspacing over everything in insert mode
