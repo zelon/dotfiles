@@ -2,6 +2,8 @@
 
 input=$(cat)
 
+#echo "$input" > D:/tmp/claude-statusline-input.json
+
 parse() {
   echo "$input" | python -c "
 import json, sys
@@ -37,12 +39,12 @@ git rev-parse --git-dir > /dev/null 2>&1 && current_branch="$(git branch --show-
 TZ=Asia/Seoul
 
 # 3. 5-hour rate limit usage
-five_percenct=$(parse "rate_limits.five_hour.used_percentage")
+five_percent=$(parse "rate_limits.five_hour.used_percentage")
 five_reset_stamp=$(parse "rate_limits.five_hour.resets_at")
 five_resets="$(date -d @$five_reset_stamp "+%Y-%m-%d %H:%M:%S %Z")"
 
 # weekly reset
-week_percenct=$(parse "rate_limits.seven_day.used_percentage")
+week_percent=$(parse "rate_limits.seven_day.used_percentage")
 week_reset_stamp=$(parse "rate_limits.seven_day.resets_at")
 week_resets="$(date -d @$week_reset_stamp "+%Y-%m-%d %H:%M:%S %Z")"
 
@@ -53,17 +55,25 @@ fi
 if [ "$context_used_percent" -ge 90 ]; then CONTEXT_WINDOW_COLOR="$RED"
 fi
 CURRENT_USAGE_COLOR=""
-if [ "$five_percenct" -ge 70 ]; then CURRENT_USAGE_COLOR="$YELLOW"
+if [ "$five_percent" -ge 70 ]; then CURRENT_USAGE_COLOR="$YELLOW"
 fi
-if [ "$five_percenct" -ge 90 ]; then CURRENT_USAGE_COLOR="$RED"
+if [ "$five_percent" -ge 90 ]; then CURRENT_USAGE_COLOR="$RED"
 fi
 WEEK_USAGE_COLOR=""
-if [ "$week_percenct" -ge 70 ]; then WEEK_USAGE_COLOR="$YELLOW"
+if [ "$week_percent" -ge 70 ]; then WEEK_USAGE_COLOR="$YELLOW"
 fi
-if [ "$week_percenct" -ge 90 ]; then WEEK_USAGE_COLOR="$RED"
+if [ "$week_percent" -ge 90 ]; then WEEK_USAGE_COLOR="$RED"
 fi
 
+FILLED=$((five_percent / 10)); EMPTY=$((10 - FILLED))
+printf -v FILL "%${FILLED}s"; printf -v PAD "%${EMPTY}s"
+current_bar="${FILL// /█}${PAD// /░}"
+
+FILLED=$((week_percent / 10)); EMPTY=$((10 - FILLED))
+printf -v FILL "%${FILLED}s"; printf -v PAD "%${EMPTY}s"
+week_bar="${FILL// /█}${PAD// /░}"
+
 # OUTPUT
-echo -e "${SKY} ${cwd} | 🌿 ${current_branch} |${CONTEXT_WINDOW_COLOR} context_window_used: ${context_used_percent}% ${RESET}"
-echo -e "${CURRENT_USAGE_COLOR} current_usage_percent: ${five_percenct}%, reset: ${five_resets} ${RESET}"
-echo -e "${WEEK_USAGE_COLOR}    week_usage_percent: ${week_percenct}%, reset: ${week_resets} ${RESET}"
+echo -e "${cwd} | 🌿 ${current_branch} |${CONTEXT_WINDOW_COLOR} context_window_used: ${context_used_percent}% ${RESET}"
+echo -e "${CURRENT_USAGE_COLOR} current: ${current_bar} ${five_percent}%, reset: ${five_resets} ${RESET}"
+echo -e "${WEEK_USAGE_COLOR}    week: ${week_bar} ${week_percent}%, reset: ${week_resets} ${RESET}"
