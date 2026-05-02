@@ -2,6 +2,10 @@
 
 # Read JSON from stdin
 $inputJson = [Console]::In.ReadToEnd()
+
+# for debugging
+#$inputJson | Set-Content -Path D:/tmp/claude_input.json
+
 $data = $inputJson | ConvertFrom-Json
 
 # Helper: safely get nested property by dot-notation key
@@ -26,6 +30,7 @@ $RESET   = "$ESC[0m"
 
 # Parse fields
 $cwd                     = Get-JsonValue $data "cwd"
+$currentModel           = Get-JsonValue $data "model.id"
 $contextUsedPercent      = [int](Get-JsonValue $data "context_window.used_percentage")
 $contextRemainingPercent = [int](Get-JsonValue $data "context_window.remaining_percentage")
 
@@ -70,6 +75,6 @@ if ($weekPercent -ge 70) { $weekColor = $YELLOW }
 if ($weekPercent -ge 90) { $weekColor = $RED    }
 
 # Output (matches bash version layout)
-Write-Output "- ${cwd} | branch: ${currentBranch} |${contextColor} context_window_used: ${contextUsedPercent}% ${RESET}"
+Write-Output "- ${cwd} | branch: ${currentBranch} | model: ${currentModel} |${contextColor} context_window_used: ${contextUsedPercent}% ${RESET}"
 Write-Output "-${currentColor} current: ${currentBar} ${fivePercent}%, reset: ${fiveResets} ${RESET}"
 Write-Output "-${weekColor}    week: ${weekBar} ${weekPercent}%, reset: ${weekResets} ${RESET}"
