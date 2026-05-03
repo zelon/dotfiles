@@ -19,6 +19,26 @@ function Get-JsonValue {
     return "$val"
 }
 
+function Format-RemainingTime($ts) {
+    if ($ts.TotalSeconds -le 0) {
+        return "expired"
+    }
+
+    $days = [math]::Floor($ts.TotalDays)
+    $hours = $ts.Hours
+    $minutes = $ts.Minutes
+
+    if ($days -gt 0) {
+        return "($days" + "d $hours" + "h left)"
+    }
+    elseif ($hours -gt 0) {
+        return "($hours" + "h $minutes" + "m left)"
+    }
+    else {
+        return "($minutes" + "m left)"
+    }
+}
+
 # ANSI Color Codes
 $ESC     = [char]27
 $CYAN    = "$ESC[36m"
@@ -44,11 +64,17 @@ if ($LASTEXITCODE -eq 0) {
 # 5-hour rate limit
 $fivePercent    = [int](Get-JsonValue $data "rate_limits.five_hour.used_percentage")
 $fiveResetStamp = [long](Get-JsonValue $data "rate_limits.five_hour.resets_at")
+$fiveResetTime = [System.DateTimeOffset]::FromUnixTimeSeconds($fiveResetStamp)
+$fiveRemaining = $fiveResetTime - [System.DateTimeOffset]::UtcNow
+$fiveRemainingString = (Format-RemainingTime $fiveRemaining)
 $fiveResets     = [System.DateTimeOffset]::FromUnixTimeSeconds($fiveResetStamp).ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss zzz")
 
 # Weekly rate limit
 $weekPercent    = [int](Get-JsonValue $data "rate_limits.seven_day.used_percentage")
 $weekResetStamp = [long](Get-JsonValue $data "rate_limits.seven_day.resets_at")
+$weekResetTime = [System.DateTimeOffset]::FromUnixTimeSeconds($weekResetStamp)
+$weekRemaining = $weekResetTime - [System.DateTimeOffset]::UtcNow
+$weekRemainingString = (Format-RemainingTime $weekRemaining)
 $weekResets     = [System.DateTimeOffset]::FromUnixTimeSeconds($weekResetStamp).ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss zzz")
 
 # Progress bar builder
@@ -76,5 +102,9 @@ if ($weekPercent -ge 90) { $weekColor = $RED    }
 
 # Output (matches bash version layout)
 Write-Output "- ${cwd} | branch: ${currentBranch} | model: ${currentModel} |${contextColor} context_window_used: ${contextUsedPercent}% ${RESET}"
-Write-Output "-${currentColor} current: ${currentBar} ${fivePercent}%, reset: ${fiveResets} ${RESET}"
-Write-Output "-${weekColor}    week: ${weekBar} ${weekPercent}%, reset: ${weekResets} ${RESET}"
+
+$formatPercent = "{0,3}" -f $fivePercent
+Write-Output "-${currentColor} current: ${currentBar} ${formatPercent}%, reset: ${fiveResets} ${RESET} ${fiveRemainingString}"
+
+$formatPercent = "{0,3}" -f $weekPercent
+Write-Output "-${weekColor}    week: ${weekBar} ${formatPercent}%, reset: ${weekResets} ${RESET} ${weekRemainingString}"
